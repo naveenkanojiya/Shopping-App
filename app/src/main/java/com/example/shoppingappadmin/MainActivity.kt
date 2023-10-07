@@ -30,6 +30,7 @@ class MainActivity : AppCompatActivity() {
                 binding.rootLayout.setBackgroundColor(Color.LTGRAY)
                 binding.mainlayout.visibility = View.GONE
                 binding.spinKit.visibility = View.VISIBLE
+
                 //Image Uri will not be null for RESULT_OK
                 val fileUri = data?.data!!
 
@@ -75,14 +76,15 @@ class MainActivity : AppCompatActivity() {
                 binding.productPrice.setError("Bhai Price to Dal Le😒😒")
             } else if (binding.disp.text.toString().isEmpty()) {
                 binding.disp.setError("Bhai Description to Dal Le😒😒")
-            }
-            else if (productModel.imageUrl.isNullOrEmpty()){
-                Toast.makeText(this@MainActivity,"bhai Image to Dal",Toast.LENGTH_SHORT).show()
-//            }else if (binding.disp.text.toString().trim().length<80) {
-//                binding.disp.setError("Bhai Description 80 char se kam hai 🤔")
-           }
-            else{
-                Toast.makeText(this@MainActivity,"Ha Sahi Hai",Toast.LENGTH_SHORT).show()
+            } else if (productModel.imageUrl.isEmpty()) {
+                Toast.makeText(this@MainActivity, "bhai Image to Dal", Toast.LENGTH_SHORT).show()
+            } else if (binding.disp.text.toString().trim().length < 80) {
+                binding.disp.setError("Bhai Description 80 char se kam hai 🤔")
+            } else {
+                productModel.name = binding.productName.text.toString()
+                productModel.disp = binding.disp.text.toString()
+                productModel.price = binding.productPrice.text.toString().toDouble()
+                Toast.makeText(this@MainActivity, "Ha Sahi Hai👍👍", Toast.LENGTH_SHORT).show()
             }
         }
     }
