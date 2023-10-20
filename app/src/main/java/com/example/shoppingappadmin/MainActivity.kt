@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.shoppingappadmin.databinding.ActivityMainBinding
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import java.util.UUID
@@ -76,16 +77,36 @@ class MainActivity : AppCompatActivity() {
                 binding.productPrice.setError("Bhai Price to Dal Le😒😒")
             } else if (binding.disp.text.toString().isEmpty()) {
                 binding.disp.setError("Bhai Description to Dal Le😒😒")
+
             } else if (productModel.imageUrl.isEmpty()) {
                 Toast.makeText(this@MainActivity, "bhai Image to Dal", Toast.LENGTH_SHORT).show()
-            } else if (binding.disp.text.toString().trim().length < 80) {
+            } else if (binding.disp.text.toString().trim().length < 20) {
                 binding.disp.setError("Bhai Description 80 char se kam hai 🤔")
             } else {
                 productModel.name = binding.productName.text.toString()
                 productModel.disp = binding.disp.text.toString()
                 productModel.price = binding.productPrice.text.toString().toDouble()
-                Toast.makeText(this@MainActivity, "Ha Sahi Hai👍👍", Toast.LENGTH_SHORT).show()
+
+
+                Firebase.firestore.collection("Product").document(UUID.randomUUID().toString())
+                    .set(productModel).addOnCompleteListener {
+                        if (it.isSuccessful){
+                            Toast.makeText(this@MainActivity, "Product is  Added 👍👍", Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(this@MainActivity, "Product is not  Added 😕😕", Toast.LENGTH_SHORT).show()
+
+                        }
+                    }
+
+
             }
         }
     }
 }
+
+
+
+
+
+
+
