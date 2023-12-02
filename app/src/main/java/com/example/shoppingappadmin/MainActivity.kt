@@ -48,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                             }
 
                         }
-
                     }
 
 
@@ -94,7 +93,6 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this@MainActivity, "Product is  Added 👍👍", Toast.LENGTH_SHORT).show()
                         }else{
                             Toast.makeText(this@MainActivity, "Product is not  Added 😕😕", Toast.LENGTH_SHORT).show()
-
                         }
                     }
 
