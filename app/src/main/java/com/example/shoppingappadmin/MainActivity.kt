@@ -7,6 +7,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.example.shoppingappadmin.databinding.ActivityMainBinding
@@ -18,10 +20,11 @@ import java.util.UUID
 
 class MainActivity : AppCompatActivity() {
 
-    val binding by lazy {
+    private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
     var productModel = ProductModel()
+    var categoryList = arrayOf("Dresses","Tops","Bottoms","Jumpsuits")
     private val startForProfileImageResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val resultCode = result.resultCode
@@ -69,6 +72,21 @@ class MainActivity : AppCompatActivity() {
                     startForProfileImageResult.launch(intent)
                 }
         }
+
+        var arrayAdapter = ArrayAdapter(this@MainActivity,android.R.layout.simple_list_item_1,categoryList)
+        binding.category.adapter=arrayAdapter
+
+        binding.category.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                productModel.category = categoryList[p2]
+
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+
+            }
+        }
+
         binding.addProduct.setOnClickListener {
             if (binding.productName.text.toString().isEmpty()) {
                 binding.productName.setError("Bhai Name to Dal Le😒😒")
